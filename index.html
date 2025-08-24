@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NEET PREP – Official by NAVEED ALI</title>
+  <meta name="description" content="Official NEET Prep website by NAVEED ALI. Full syllabus filters (Subject → Chapter → Topic), timer, +4/−1 scoring, explanations, bookmarks, local leaderboard."
+  />
+  <meta name="theme-color" content="#2563eb">
+  <meta property="og:title" content="NEET PREP – Official" />
+  <meta property="og:description" content="Practice NEET-style questions by subject, chapter and topic." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'%3E%3Crect width='100%25' height='100%25' fill='%232563eb'/%3E%3Ctext x='50%25' y='52%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='64' fill='white'%3ENEET%20PREP%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='24' fill='%232563eb'/%3E%3Ctext x='50%25' y='58%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='64' fill='white'%3EN%3C/text%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+    .container { max-width: 1120px; }
+    .grad { background: linear-gradient(135deg,#2563eb 0%,#4f46e5 60%,#7c3aed 100%); }
+    .logoMark { width: 36px; height: 36px; border-radius: 12px; position: relative; overflow: hidden; }
+    .logoMark:before{ content:''; position:absolute; inset:0; background: conic-gradient(from 220deg, #7c3aed, #2563eb, #22c55e, #f59e0b, #7c3aed); filter: blur(6px); opacity: .25; }
+    .logoMark:after{ content:'+'; position:absolute; inset:0; display:grid; place-items:center; color:white; font-weight:800; font-size:22px; }
+    .link { cursor: pointer; }
+    ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#e5e7eb;border-radius:6px}
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-50 bg-white/90 border-b border-slate-200 backdrop-blur">
+    <div class="container mx-auto px-4 py-3 flex items-center gap-4">
+      <div class="flex items-center gap-2 select-none link" data-route="#/home">
+        <div class="logoMark grad"></div>
+        <div class="font-extrabold tracking-tight text-slate-900">NEET PREP</div>
+      </div>
+      <nav class="ml-auto hidden md:flex items-center gap-6 text-sm">
+        <a class="link hover:text-blue-600" data-route="#/home">Home</a>
+        <a class="link hover:text-blue-600" data-route="#/quiz">Practice</a>
+        <a class="link hover:text-blue-600" data-route="#/syllabus">Syllabus</a>
+        <a class="link hover:text-blue-600" data-route="#/bookmarks">Bookmarks</a>
+        <a class="link hover:text-blue-600" data-route="#/about">About</a>
+        <a class="link hover:text-blue-600" data-route="#/contact">Contact</a>
+      </nav>
+      <a class="md:hidden ml-auto px-3 py-1.5 rounded-xl bg-blue-600 text-white text-sm link" data-route="#/quiz">Start</a>
+    </div>
+  </header>
+
+  <!-- ROUTER OUTLET -->
+  <main id="app" class="min-h-[70vh]"></main>
+
+  <!-- FOOTER -->
+  <footer class="mt-10 border-t border-slate-200">
+    <div class="container mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 text-sm">
+      <div>
+        <div class="font-semibold mb-1">NEET PREP – Official</div>
+        <p class="text-slate-600">Created by <strong>NAVEED ALI</strong>. Free practice website for NEET aspirants. Not affiliated with NTA.</p>
+        <div class="mt-2"><a href="./index.html" class="text-blue-600 underline" target="_blank">Open in Chrome</a></div>
+      </div>
+      <div>
+        <div class="font-semibold mb-1">Links</div>
+        <ul class="space-y-1">
+          <li><a class="link hover:text-blue-600" data-route="#/quiz">Practice</a></li>
+          <li><a class="link hover:text-blue-600" data-route="#/syllabus">Syllabus</a></li>
+          <li><a class="link hover:text-blue-600" data-route="#/privacy">Privacy</a></li>
+          <li><a class="link hover:text-blue-600" data-route="#/terms">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-semibold mb-1">Contact</div>
+        <p class="text-slate-600">Email: <a href="mailto:naveedalicodes1@gmail.com" class="text-blue-600 underline">naveedalicodes1@gmail.com</a></p>
+        <a href="mailto:naveedalicodes1@gmail.com?subject=NEET%20PREP%20Feedback" class="inline-block mt-2 px-3 py-2 rounded-xl bg-slate-900 text-white">Email Us</a>
+      </div>
+    </div>
+    <div class="py-4 text-center text-xs text-slate-500">© <span id="year"></span> NEET PREP • Built by <strong>NAVEED ALI</strong></div>
+  </footer>
+
+  <!-- TEMPLATES -->
+  <template id="homeTpl">
+    <section class="grad text-white">
+      <div class="container mx-auto px-4 py-16 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight">Crack NEET with structured practice</h1>
+          <p class="mt-4 text-white/90">Filter by <strong>Subject → Chapter → Topic</strong>. Timed quizzes, +4/−1 scoring, explanations, bookmarks, local leaderboard.</p>
+          <div class="mt-6 flex gap-3">
+            <a class="px-5 py-3 rounded-2xl bg-white text-slate-900 font-semibold link" data-route="#/quiz">Start Practicing</a>
+            <a class="px-5 py-3 rounded-2xl border border-white/60 text-white/95 link" data-route="#/syllabus">View Full Syllabus</a>
+          </div>
+        </div>
+        <div class="rounded-3xl p-6 bg-white/90 text-slate-900 shadow-xl">
+          <div class="text-sm text-slate-600 mb-2">Quick Stats (this device)</div>
+          <div class="grid grid-cols-3 gap-3">
+            <div class="p-4 rounded-2xl bg-white"><div class="text-2xl font-bold" id="statTotalQ">—</div><div class="text-xs text-slate-500">Questions</div></div>
+            <div class="p-4 rounded-2xl bg-white"><div class="text-2xl font-bold" id="statSubjects">3</div><div class="text-xs text-slate-500">Subjects</div></div>
+            <div class="p-4 rounded-2xl bg-white"><div class="text-2xl font-bold" id="statBookmarks">0</div><div class="text-xs text-slate-500">Bookmarks</div></div>
+          </div>
+          <div class="mt-4 text-xs text-slate-600">Data saved locally using your browser.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mx-auto px-4 py-12">
+      <h2 class="text-2xl font-bold">Official by <strong>NAVEED ALI</strong></h2>
+      <p class="text-slate-600 mt-2">Need help or want to contribute questions? Email <a href="mailto:naveedalicodes1@gmail.com" class="text-blue-600 underline">naveedalicodes1@gmail.com</a>.</p>
+    </section>
+  </template>
+
+  <template id="quizTpl">
+    <section class="container mx-auto px-4 py-8">
+      <div class="flex flex-wrap items-center gap-3 mb-4">
+        <div class="text-xs px-3 py-1 rounded-full bg-slate-100"><span id="timer">⏱ 00:00</span></div>
+        <div class="text-xs px-3 py-1 rounded-full bg-slate-100"><span id="progress">0 / 0</span></div>
+        <div class="text-xs px-3 py-1 rounded-full bg-slate-100">+4 / −1</div>
+      </div>
+
+      <div class="grid lg:grid-cols-4 gap-4 mb-6">
+        <div class="lg:col-span-3 grid sm:grid-cols-4 gap-3">
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Subject</span>
+            <select id="subjectSelect" class="w-full rounded-xl border-slate-300 p-2"></select>
+          </label>
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Chapter</span>
+            <select id="chapterSelect" class="w-full rounded-xl border-slate-300 p-2"></select>
+          </label>
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Topic</span>
+            <select id="topicSelect" class="w-full rounded-xl border-slate-300 p-2"></select>
+          </label>
+          <label class="block">
+            <span class="block text-sm font-medium mb-1">Questions</span>
+            <input id="countInput" type="number" min="1" max="100" value="15" class="w-full rounded-xl border-slate-300 p-2"/>
+          </label>
+        </div>
+        <div class="flex lg:justify-end gap-2 lg:items-end">
+          <button id="startBtn" class="px-4 py-2 rounded-2xl bg-blue-600 text-white">Start Quiz</button>
+          <button id="resetBtn" class="px-4 py-2 rounded-2xl bg-slate-200">Reset</button>
+        </div>
+      </div>
+
+      <section id="quizCard" class="hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="p-4 border-b border-slate-200 flex items-center gap-3">
+          <span id="badgeSubject" class="text-xs font-semibold bg-slate-100 px-2.5 py-1 rounded-full">—</span>
+          <span id="badgeChapter" class="text-xs bg-slate-100 px-2 py-1 rounded-full">—</span>
+          <span id="badgeTopic" class="text-xs bg-slate-100 px-2 py-1 rounded-full">—</span>
+        </div>
+        <div class="p-5 space-y-4">
+          <div class="text-sm text-slate-500" id="qNumber">Question 1</div>
+          <h2 id="qText" class="text-lg font-medium"></h2>
+          <ul id="options" class="grid gap-3"></ul>
+          <div id="explanation" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900"></div>
+        </div>
+        <div class="p-4 border-t border-slate-200 flex flex-wrap gap-2 items-center">
+          <button id="prevBtn" class="px-4 py-2 rounded-2xl bg-slate-200">Prev</button>
+          <button id="nextBtn" class="px-4 py-2 rounded-2xl bg-slate-200">Next</button>
+          <button id="submitBtn" class="ml-auto px-4 py-2 rounded-2xl bg-indigo-600 text-white">Submit</button>
+          <button id="showExpBtn" class="px-4 py-2 rounded-2xl bg-emerald-600 text-white">Show Explanation</button>
+          <button id="bookmarkBtn" class="px-3 py-2 rounded-2xl bg-amber-100 text-amber-900">★ Bookmark</button>
+        </div>
+      </section>
+
+      <section id="results" class="hidden mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold mb-2">Result</h3>
+          <p id="scoreLine" class="text-slate-700"></p>
+          <div id="breakdown" class="mt-3 grid sm:grid-cols-3 gap-3"></div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <button id="reviewIncorrectBtn" class="px-4 py-2 rounded-2xl bg-rose-600 text-white">Review Incorrect</button>
+            <button id="exportBtn" class="px-4 py-2 rounded-2xl bg-slate-200">Export Session (.json)</button>
+            <label class="px-4 py-2 rounded-2xl bg-slate-200 cursor-pointer">
+              Import Session<input id="importInput" type="file" accept="application/json" class="hidden"/>
+            </label>
+            <button id="saveLeaderboard" class="px-4 py-2 rounded-2xl bg-blue-600 text-white">Save to Leaderboard</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="leaderboard" class="mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div class="p-5">
+          <h3 class="text-xl font-semibold mb-2">Local Leaderboard</h3>
+          <div id="lbList" class="space-y-2 text-sm text-slate-700"></div>
+        </div>
+      </section>
+    </section>
+  </template>
+
+  <template id="syllabusTpl">
+    <section class="container mx-auto px-4 py-10">
+      <h2 class="text-2xl font-bold mb-4">NEET Full Syllabus</h2>
+      <div id="syllabusWrap" class="space-y-6"></div>
+      <p class="text-sm text-slate-500 mt-4">Chapters & topics follow the official NEET outline (XI & XII). Use Practice → filters to drill into any topic.</p>
+    </section>
+  </template>
+
+  <template id="bookTpl">
+    <section class="container mx-auto px-4 py-10">
+      <h2 class="text-2xl font-bold mb-4">Bookmarked Questions</h2>
+      <div id="bookmarksList" class="space-y-3"></div>
+      <p class="text-sm text-slate-500 mt-4">Bookmarks are saved on this device.</p>
+    </section>
+  </template>
+
+  <template id="aboutTpl">
+    <section class="container mx-auto px-4 py-10 prose max-w-none">
+      <h2>About</h2>
+      <p><strong>NEET PREP</strong> is the official practice website by <strong>NAVEED ALI</strong>. It provides NEET-style questions with succinct explanations and the +4/−1 marking scheme. This is an independent educational resource and is <strong>not affiliated</strong> with NTA.</p>
+    </section>
+  </template>
+
+  <template id="contactTpl">
+    <section class="container mx-auto px-4 py-10">
+      <h2 class="text-2xl font-bold mb-2">Contact</h2>
+      <p class="text-slate-600 mb-6">We value corrections and contributions.</p>
+      <form id="contactForm" class="grid md:grid-cols-2 gap-4 max-w-2xl">
+        <input id="cName" class="rounded-xl border-slate-300 p-3" placeholder="Your name" required />
+        <input id="cEmail" type="email" class="rounded-xl border-slate-300 p-3" placeholder="Email" value="naveedalicodes1@gmail.com" required />
+        <textarea id="cMsg" class="md:col-span-2 rounded-xl border-slate-300 p-3 min-h-[120px]" placeholder="Message" required></textarea>
+        <button class="md:col-span-2 px-4 py-2 rounded-2xl bg-blue-600 text-white">Send</button>
+      </form>
+      <p class="text-sm text-slate-500 mt-4">This opens your email app to send the message to <strong>naveedalicodes1@gmail.com</strong>.</p>
+    </section>
+  </template>
+
+  <template id="privacyTpl">
+    <section class="container mx-auto px-4 py-10 prose max-w-none">
+      <h2>Privacy Policy</h2>
+      <p>This site stores your quiz progress, bookmarks, and leaderboard locally (browser <em>localStorage</em>). No server-side storage.</p>
+    </section>
+  </template>
+
+  <template id="termsTpl">
+    <section class="container mx-auto px-4 py-10 prose max-w-none">
+      <h2>Terms of Use</h2>
+      <ul>
+        <li>Educational use only; content provided “as is”.</li>
+        <li>No affiliation with NTA/NEET official bodies.</li>
+        <li>Verify answers with standard textbooks.</li>
+      </ul>
+    </section>
+  </template>
+
+  <!-- APP SCRIPT -->
+  <script>
+    // ------------------ Router ------------------
+    const routes = {
+      '#/home': renderHome,
+      '#/quiz': renderQuiz,
+      '#/syllabus': renderSyllabus,
+      '#/bookmarks': renderBookmarksPage,
+      '#/about': renderAbout,
+      '#/contact': renderContact,
+      '#/privacy': renderPrivacy,
+      '#/terms': renderTerms,
+    };
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('.link[data-route]');
+      if (a) { e.preventDefault(); navigate(a.dataset.route); }
+    });
+
+    function navigate(hash) {
+      window.location.hash = hash;
+      renderRoute();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('hashchange', renderRoute);
+    function renderRoute() { const hash = window.location.hash || '#/home'; (routes[hash] || renderHome)(); }
+
+    const $ = (sel, root=document) => root.querySelector(sel);
+    function formatTime(sec){const m=Math.floor(sec/60).toString().padStart(2,'0');const s=Math.floor(sec%60).toString().padStart(2,'0');return `${m}:${s}`}
+    function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+    // ------------------ Syllabus (Full Outline) ------------------
+    // Note: This is the official-style outline split by Class/Branch. You can expand topics as you like.
+    const SYLLABUS = {
+      Physics: {
+        XI: [
+          { chapter: 'Physical World & Measurement', topics: ['Units & Dimensions','Significant Figures','Error Analysis'] },
+          { chapter: 'Kinematics', topics: ['Motion in a Straight Line','Motion in a Plane','Relative Motion','Projectile Motion'] },
+          { chapter: 'Laws of Motion', topics: ['Newton’s Laws','Friction','Circular Motion'] },
+          { chapter: 'Work, Energy & Power', topics: ['Work-Energy Theorem','Conservation of Energy','Power'] },
+          { chapter: 'System of Particles & Rigid Body', topics: ['COM','Torque & Angular Momentum','Rolling Motion'] },
+          { chapter: 'Gravitation', topics: ['Kepler’s Laws','Satellites','Escape Velocity'] },
+          { chapter: 'Properties of Bulk Matter', topics: ['Elasticity','Viscosity','Surface Tension'] },
+          { chapter: 'Thermodynamics', topics: ['Zeroth & First Law','Isothermal/Adiabatic','Heat Engines & Efficiency'] },
+          { chapter: 'Kinetic Theory of Gases', topics: ['Mean Free Path','Degrees of Freedom','Gas Laws'] },
+          { chapter: 'Oscillations & Waves', topics: ['SHM','Damped & Forced Oscillations','Wave Motion','Sound'] },
+        ],
+        XII: [
+          { chapter: 'Electrostatics', topics: ['Coulomb’s Law','Electric Field & Potential','Capacitance'] },
+          { chapter: 'Current Electricity', topics: ['Ohm’s Law','Kirchhoff’s Laws','Cells & Bridges'] },
+          { chapter: 'Magnetic Effects of Current & Magnetism', topics: ['Biot–Savart','Ampere’s Law','Solenoids','Earth’s Magnetism'] },
+          { chapter: 'EM Induction & AC', topics: ['Faraday’s Law','Lenz’s Law','Alternating Current','Transformers'] },
+          { chapter: 'EM Waves', topics: ['Maxwell’s Equations (idea)','Spectrum'] },
+          { chapter: 'Optics', topics: ['Ray Optics','Lenses & Mirrors','Wave Optics','Interference & Diffraction','Polarization'] },
+          { chapter: 'Dual Nature of Radiation & Matter', topics: ['Photoelectric Effect','de Broglie'] },
+          { chapter: 'Atoms & Nuclei', topics: ['Bohr Model','Radioactivity','Nuclear Energy'] },
+          { chapter: 'Electronic Devices', topics: ['Semiconductors','Diodes','Transistors','Logic Gates'] },
+          { chapter: 'Communication Systems', topics: ['Modulation','Bandwidth','Propagation'] },
+        ],
+      },
+      Chemistry: {
+        Physical: [
+          { chapter: 'Some Basic Concepts of Chemistry', topics: ['Mole Concept','Stoichiometry','Atomic & Molecular Mass'] },
+          { chapter: 'States of Matter', topics: ['Gaseous State','Liquid State'] },
+          { chapter: 'Thermodynamics', topics: ['Enthalpy & Entropy','Gibbs Energy','Hess Law'] },
+          { chapter: 'Equilibrium', topics: ['Chemical Equilibrium','Ionic Equilibrium','Buffer & Solubility'] },
+          { chapter: 'Redox Reactions', topics: ['Oxidation Number','Balancing','Electrochemistry Basics'] },
+          { chapter: 'Electrochemistry', topics: ['Nernst Equation','Batteries','Corrosion'] },
+          { chapter: 'Chemical Kinetics', topics: ['Rate Law','Order & Molecularity','Arrhenius'] },
+          { chapter: 'Surface Chemistry', topics: ['Adsorption','Catalysis','Colloids'] },
+          { chapter: 'Solutions', topics: ['Concentration Terms','Colligative Properties'] },
+        ],
+        Inorganic: [
+          { chapter: 'Periodic Table & Periodicity', topics: ['Trends','Z_eff','Anomalies'] },
+          { chapter: 'Hydrogen & s-Block', topics: ['Hydrides','Water & Hardness','Alkali & Alkaline Earth'] },
+          { chapter: 'p-Block Elements', topics: ['Group 13–18','Important Compounds'] },
+          { chapter: 'd- & f-Block Elements', topics: ['Transition Metals','Lanthanides & Actinides'] },
+          { chapter: 'Coordination Compounds', topics: ['Nomenclature','Bonding (VBT/CFSE)','Isomerism'] },
+          { chapter: 'Metallurgy', topics: ['Roasting & Smelting','Refining'] },
+          { chapter: 'Environmental Chemistry', topics: ['Pollutants','Green Chemistry'] },
+        ],
+        Organic: [
+          { chapter: 'Some Basic Principles of Organic Chemistry', topics: ['Hybridization','Inductive/Resonance','Carbocations/Carbanions'] },
+          { chapter: 'Hydrocarbons', topics: ['Alkanes','Alkenes','Alkynes','Arenes'] },
+          { chapter: 'Haloalkanes & Haloarenes', topics: ['SN1/SN2','Elimination'] },
+          { chapter: 'Alcohols, Phenols & Ethers', topics: ['Reactivity','Lucas Test','Ethers'] },
+          { chapter: 'Aldehydes, Ketones & Carboxylic Acids', topics: ['Nucleophilic Addition','Acidity','Derivatives'] },
+          { chapter: 'Amines', topics: ['Basicity','Diazotization','Hoffmann'] },
+          { chapter: 'Biomolecules & Polymers', topics: ['Carbohydrates','Proteins & Enzymes','DNA/RNA','Polymers'] },
+          { chapter: 'Practical Organic Chemistry', topics: ['Purification','Qualitative Analysis'] },
+        ],
+      },
+      Biology: {
+        XI: [
+          { chapter: 'Diversity in Living World', topics: ['Taxonomy','Systems of Classification','Kingdoms'] },
+          { chapter: 'Structural Organisation in Animals & Plants', topics: ['Tissues','Morphology','Anatomy'] },
+          { chapter: 'Cell Structure & Function', topics: ['Cell Organelles','Membrane Transport','Cell Division'] },
+          { chapter: 'Plant Physiology', topics: ['Photosynthesis','Respiration','Plant Growth & Hormones','Transport in Plants'] },
+          { chapter: 'Human Physiology (XI)', topics: ['Digestion','Respiration','Circulation','Excretion','Locomotion & Movement','Neural & Chemical Coordination'] },
+        ],
+        XII: [
+          { chapter: 'Reproduction', topics: ['Reproduction in Organisms','Sexual Reproduction in Flowering Plants','Human Reproduction','Reproductive Health'] },
+          { chapter: 'Genetics & Evolution', topics: ['Principles of Inheritance','Molecular Basis of Inheritance','Evolution'] },
+          { chapter: 'Biology & Human Welfare', topics: ['Microbes in Human Welfare','Human Health & Disease'] },
+          { chapter: 'Biotechnology', topics: ['Principles & Processes','Applications'] },
+          { chapter: 'Ecology & Environment', topics: ['Organisms & Populations','Ecosystem','Biodiversity & Conservation','Environmental Issues'] },
+        ],
+      },
+    };
+
+    // ------------------ Sample Questions (fallback) ------------------
+    // Full database should go into questions.json using the same schema.
+    const SAMPLE_QUESTIONS = [
+      { id:'P-KIN-1', subject:'Physics', chapter:'Kinematics', topic:'Motion in a Straight Line', q:'x(t)=At^2+Bt. The instantaneous acceleration is', options:['A','2A','B','2B'], ans:1, exp:'v=2At+B; a=dv/dt=2A.' },
+      { id:'P-THER-1', subject:'Physics', chapter:'Thermodynamics', topic:'Isothermal/Adiabatic', q:'Isothermal expansion from V to 2V at T: work done is', options:['nRT ln 2','2nRT','nRΔT','0'], ans:0, exp:'W = nRT ln(V2/V1).'},
+      { id:'C-ELEC-1', subject:'Chemistry', chapter:'Electrochemistry', topic:'Nernst Equation', q:'ΔG° and E°cell are related by', options:['ΔG° = nFE°','ΔG° = -nFE°','ΔG° = RT ln K','E° = -RT/nF'], ans:1, exp:'ΔG° = -nFE°.'},
+      { id:'C-ORGC-1', subject:'Chemistry', chapter:'Alcohols, Phenols & Ethers', topic:'Reactivity', q:'Lucas test gives immediate turbidity with', options:['1° alcohols','2° alcohols','3° alcohols','Phenols'], ans:2, exp:'Tertiary carbocation forms fastest.'},
+      { id:'B-CELL-1', subject:'Biology', chapter:'Cell Structure & Function', topic:'Cell Organelles', q:'Oxidative phosphorylation occurs in', options:['Cytosol','Mitochondrial matrix ribosomes','Inner mitochondrial membrane','Outer mitochondrial membrane'], ans:2, exp:'ETC & ATP synthase on inner membrane.'},
+      { id:'B-GEN-1', subject:'Biology', chapter:'Genetics & Evolution', topic:'Principles of Inheritance', q:'A test cross is F1 ×', options:['Homozygous dominant','Homozygous recessive','Heterozygote','Any genotype'], ans:1, exp:'Homozygous recessive reveals genotype.'}
+    ];
+
+    // ------------------ Data & State ------------------
+    let QUESTIONS = [];
+    const state = {
+      pool: [], order: [], idx: 0, answers: {}, startedAt: null, timerId: null,
+      bookmarks: new Set(JSON.parse(localStorage.getItem('neet_bookmarks') || '[]')),
+    };
+
+    // ------------------ Init & route helpers ------------------
+    function renderHome(){
+      const app = document.getElementById('app');
+      app.innerHTML = document.getElementById('homeTpl').innerHTML;
+      $('#year').textContent = new Date().getFullYear();
+      document.getElementById('statTotalQ').textContent = QUESTIONS.length || '—';
+      document.getElementById('statBookmarks').textContent = state.bookmarks.size;
+    }
+
+    function renderQuiz(){
+      const app = document.getElementById('app');
+      app.innerHTML = document.getElementById('quizTpl').innerHTML;
+
+      const subjectSelect = $('#subjectSelect');
+      const chapterSelect = $('#chapterSelect');
+      const topicSelect = $('#topicSelect');
+      const countInput = $('#countInput');
+      const timerEl = $('#timer');
+      const progressEl = $('#progress');
+
+      // Build Subject options from SYLLABUS
+      const subjectOptions = ['All','Physics','Chemistry','Biology'];
+      subjectSelect.innerHTML = subjectOptions.map(s=>`<option value="${s}">${s}</option>`).join('');
+
+      function chaptersFor(subject){
+        if(subject==='All') return ['All'];
+        const s = SYLLABUS[subject];
+        const list = [];
+        if(subject==='Physics' || subject==='Biology'){
+          Object.keys(s).forEach(cls => s[cls].forEach(ch => list.push(ch.chapter)));
+        } else if(subject==='Chemistry'){
+          Object.keys(s).forEach(branch => s[branch].forEach(ch => list.push(ch.chapter)));
+        }
+        return ['All', ...Array.from(new Set(list))];
+      }
+
+      function topicsFor(subject, chapter){
+        if(chapter==='All') return ['All'];
+        const s = SYLLABUS[subject];
+        let topics=[];
+        if(subject==='Physics' || subject==='Biology'){
+          Object.keys(s).forEach(cls => s[cls].forEach(ch => { if(ch.chapter===chapter) topics = ch.topics; }));
+        } else if(subject==='Chemistry'){
+          Object.keys(s).forEach(branch => s[branch].forEach(ch => { if(ch.chapter===chapter) topics = ch.topics; }));
+        }
+        return ['All', ...topics];
+      }
+
+      function refreshChapters(){
+        const ch = chaptersFor(subjectSelect.value);
+        chapterSelect.innerHTML = ch.map(c=>`<option value="${c}">${c}</option>`).join('');
+        refreshTopics();
+      }
+      function refreshTopics(){
+        const t = (subjectSelect.value==='All') ? ['All'] : topicsFor(subjectSelect.value, chapterSelect.value);
+        topicSelect.innerHTML = t.map(x=>`<option value='${x}'>${x}</option>`).join('');
+      }
+      subjectSelect.addEventListener('change', refreshChapters);
+      chapterSelect.addEventListener('change', refreshTopics);
+      refreshChapters();
+
+      function startTimer(){ if(state.timerId) clearInterval(state.timerId); const start=Date.now(); state.startedAt=Date.now(); state.timerId=setInterval(()=>{ timerEl.textContent = `⏱ ${formatTime((Date.now()-start)/1000)}`; }, 1000);} 
+      function stopTimer(){ if(state.timerId) clearInterval(state.timerId); state.timerId=null; }
+
+      function buildPool(){
+        const subject=subjectSelect.value; const chapter=chapterSelect.value; const topic=topicSelect.value; const count=Math.max(1,Math.min(100,parseInt(countInput.value||'15')));
+        const filtered = QUESTIONS.filter(q =>
+          (subject==='All'||q.subject===subject) &&
+          (chapter==='All'||q.chapter===chapter) &&
+          (topic==='All'||q.topic===topic)
+        );
+        const pool = shuffle([...filtered]).slice(0,count);
+        state.pool=pool; state.order=pool.map(q=>q.id); state.idx=0; state.answers={};
+        saveProgress();
+      }
+      function saveProgress(){ const snapshot={ pool: state.pool, order: state.order, idx: state.idx, answers: state.answers, startedAt: state.startedAt, elapsed: (Date.now()-state.startedAt)/1000 }; localStorage.setItem('neet_session', JSON.stringify(snapshot)); }
+      function loadProgress(){ try{ const raw=localStorage.getItem('neet_session'); return raw?JSON.parse(raw):null }catch{return null} }
+
+      const quizCard = $('#quizCard');
+      const qNumber = $('#qNumber');
+      const qText = $('#qText');
+      const optionsEl = $('#options');
+      const explanation = $('#explanation');
+      const badgeSubject = $('#badgeSubject');
+      const badgeChapter = $('#badgeChapter');
+      const badgeTopic = $('#badgeTopic');
+
+      function renderCurrent(){
+        const q = state.pool[state.idx]; if(!q) return;
+        quizCard.classList.remove('hidden');
+        qNumber.textContent = `Question ${state.idx+1} of ${state.pool.length}`;
+        qText.textContent = q.q; badgeSubject.textContent = q.subject; badgeChapter.textContent = q.chapter; badgeTopic.textContent = q.topic;
+        explanation.classList.add('hidden'); explanation.textContent = `Explanation: ${q.exp}`;
+        optionsEl.innerHTML='';
+        q.options.forEach((opt,i)=>{
+          const chosen = state.answers[q.id];
+          const li=document.createElement('li');
+          li.innerHTML = `<label class="flex items-start gap-3 p-3 rounded-xl border cursor-pointer hover:bg-slate-50 ${chosen===i?'border-blue-300 ring-2 ring-blue-200':'border-slate-200'}"><input type="radio" name="opt" class="mt-1" ${chosen===i?'checked':''}/><div><div class="font-medium">${String.fromCharCode(65+i)}. ${opt}</div></div></label>`;
+          li.querySelector('input').addEventListener('change', ()=>{ state.answers[q.id]=i; saveProgress(); renderCurrent(); });
+          optionsEl.appendChild(li);
+        });
+        $('#progress').textContent = `${Object.keys(state.answers).length} / ${state.pool.length}`;
+        const bookmarked = state.bookmarks.has(q.id);
+        const bb = document.getElementById('bookmarkBtn');
+        bb.textContent = bookmarked ? '★ Bookmarked' : '☆ Bookmark';
+        bb.className = bookmarked? 'px-3 py-2 rounded-2xl bg-amber-200 text-amber-900':'px-3 py-2 rounded-2xl bg-amber-100 text-amber-900';
+      }
+
+      // nav
+      document.getElementById('prevBtn').addEventListener('click',()=>{ if(state.idx>0){state.idx--; renderCurrent(); saveProgress();}});
+      document.getElementById('nextBtn').addEventListener('click',()=>{ if(state.idx<state.pool.length-1){state.idx++; renderCurrent(); saveProgress();}});
+
+      // submit & scoring
+      const results=$('#results'); const scoreLine=$('#scoreLine'); const breakdown=$('#breakdown');
+      function computeScore(pool,answers){ let correct=0, wrong=0, blank=0; let bySubject={}; pool.forEach(q=>{ bySubject[q.subject] ||= {total:0,correct:0}; bySubject[q.subject].total++; if(answers[q.id]==null) blank++; else if(answers[q.id]===q.ans){correct++; bySubject[q.subject].correct++;} else wrong++; }); const marks=4*correct-1*wrong; return {correct,wrong,blank,marks,bySubject}; }
+      function showResults(){ stopTimer(); const r=computeScore(state.pool,state.answers); scoreLine.textContent=`Correct: ${r.correct}, Wrong: ${r.wrong}, Unanswered: ${r.blank} → Score: ${r.marks}`; breakdown.innerHTML = Object.entries(r.bySubject).map(([sub,v])=>`<div class='p-3 rounded-xl border border-slate-200'><div class='text-sm text-slate-500'>${sub}</div><div class='font-semibold'>${v.correct} / ${v.total} correct</div></div>`).join(''); results.classList.remove('hidden'); }
+      document.getElementById('submitBtn').addEventListener('click', showResults);
+
+      // explain & bookmark
+      document.getElementById('showExpBtn').addEventListener('click',()=>{ explanation.classList.toggle('hidden'); });
+      document.getElementById('bookmarkBtn').addEventListener('click',()=>{ const q=state.pool[state.idx]; if(!q) return; if(state.bookmarks.has(q.id)) state.bookmarks.delete(q.id); else state.bookmarks.add(q.id); localStorage.setItem('neet_bookmarks', JSON.stringify(Array.from(state.bookmarks))); renderCurrent(); });
+
+      // review incorrect
+      document.getElementById('reviewIncorrectBtn').addEventListener('click',()=>{ const incorrect=state.pool.filter(q=>state.answers[q.id]!=null && state.answers[q.id]!==q.ans); if(!incorrect.length) return; state.pool=incorrect; state.order=incorrect.map(q=>q.id); state.idx=0; renderCurrent(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+      // export / import
+      document.getElementById('exportBtn').addEventListener('click',()=>{ const blob=new Blob([localStorage.getItem('neet_session')||'{}'],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='neet_session.json'; a.click(); URL.revokeObjectURL(url); });
+      document.getElementById('importInput').addEventListener('change',(e)=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=()=>{ try{ const snap=JSON.parse(r.result); if(!snap.pool) throw new Error('Invalid file'); state.pool=snap.pool; state.order=snap.order||state.pool.map(q=>q.id); state.idx=snap.idx||0; state.answers=snap.answers||{}; state.startedAt=Date.now(); startTimer(); renderCurrent(); results.classList.add('hidden'); }catch(err){ alert('Could not import: '+err.message); } }; r.readAsText(f); });
+
+      // leaderboard
+      function getLB(){ try{ return JSON.parse(localStorage.getItem('neet_leaderboard')||'[]'); }catch{return []} }
+      function setLB(lb){ localStorage.setItem('neet_leaderboard', JSON.stringify(lb.slice(0,20))); }
+      function renderLB(){ const lb=getLB(); const list=$('#lbList'); if(!lb.length){ list.innerHTML='<div class="text-slate-500">No records yet. Finish a quiz and save your score.</div>'; return; } list.innerHTML = lb.map((e,i)=>`<div class='p-3 rounded-xl border border-slate-200 flex items-center justify-between'><div class='text-slate-600'>#${i+1} • ${new Date(e.ts).toLocaleString()}</div><div class='font-semibold'>Score: ${e.marks}</div><div class='text-slate-500 text-sm'>C:${e.correct} W:${e.wrong} B:${e.blank}</div></div>`).join(''); }
+      document.getElementById('saveLeaderboard').addEventListener('click',()=>{ const r = computeScore(state.pool,state.answers); const lb=getLB(); lb.unshift({ ts: Date.now(), ...r }); setLB(lb); renderLB(); alert('Saved to leaderboard on this device.'); });
+
+      // start/reset
+      document.getElementById('startBtn').addEventListener('click',()=>{ buildPool(); startTimer(); renderCurrent(); $('#results').classList.add('hidden'); });
+      document.getElementById('resetBtn').addEventListener('click',()=>{ stopTimer(); localStorage.removeItem('neet_session'); state.pool=[]; state.order=[]; state.idx=0; state.answers={}; state.startedAt=null; quizCard.classList.add('hidden'); $('#results').classList.add('hidden'); timerEl.textContent='⏱ 00:00'; progressEl.textContent='0 / 0'; });
+
+      // restore session if exists
+      (function init(){ const snap=loadProgress(); if(snap && snap.pool && snap.pool.length){ state.pool=snap.pool; state.order=snap.order||state.pool.map(q=>q.id); state.idx=Math.min(Math.max(0,snap.idx), state.pool.length-1); state.answers=snap.answers||{}; quizCard.classList.remove('hidden'); startTimer(); renderCurrent(); } renderLB(); })();
+    }
+
+    function renderSyllabus(){
+      const app = document.getElementById('app');
+      app.innerHTML = document.getElementById('syllabusTpl').innerHTML;
+      const wrap = document.getElementById('syllabusWrap');
+      const makeList = (title, groups) => `
+        <div class='p-5 rounded-2xl bg-white border border-slate-200 shadow-sm'>
+          <h3 class='text-xl font-semibold mb-2'>${title}</h3>
+          ${groups.map(g=>`<div class='mb-3'><div class='font-medium'>${g.group}</div><ul class='list-disc pl-6 text-sm text-slate-700'>${g.items.map(it=>`<li><span class='font-semibold'>${it.chapter}</span>: ${it.topics.join(', ')}</li>`).join('')}</ul></div>`).join('')}
+        </div>`;
+
+      // Physics
+      const phyXI = SYLLABUS.Physics.XI.map(c=>({chapter:c.chapter, topics:c.topics}));
+      const phyXII = SYLLABUS.Physics.XII.map(c=>({chapter:c.chapter, topics:c.topics}));
+      // Chemistry (split by branch)
+      const chemPhysical = SYLLABUS.Chemistry.Physical.map(c=>({chapter:c.chapter, topics:c.topics}));
+      const chemOrganic  = SYLLABUS.Chemistry.Organic.map(c=>({chapter:c.chapter, topics:c.topics}));
+      const chemInorganic= SYLLABUS.Chemistry.Inorganic.map(c=>({chapter:c.chapter, topics:c.topics}));
+      // Biology
+      const bioXI = SYLLABUS.Biology.XI.map(c=>({chapter:c.chapter, topics:c.topics}));
+      const bioXII= SYLLABUS.Biology.XII.map(c=>({chapter:c.chapter, topics:c.topics}));
+
+      wrap.innerHTML = [
+        makeList('Physics', [ {group:'Class XI', items: phyXI}, {group:'Class XII', items: phyXII} ]),
+        makeList('Chemistry', [ {group:'Physical Chemistry', items: chemPhysical}, {group:'Organic Chemistry', items: chemOrganic}, {group:'Inorganic Chemistry', items: chemInorganic} ]),
+        makeList('Biology', [ {group:'Class XI', items: bioXI}, {group:'Class XII', items: bioXII} ])
+      ].join('');
+    }
+
+    function renderBookmarksPage(){
+      const app = document.getElementById('app');
+      app.innerHTML = document.getElementById('bookTpl').innerHTML;
+      const list = document.getElementById('bookmarksList');
+      const ids = new Set(JSON.parse(localStorage.getItem('neet_bookmarks')||'[]'));
+      const bookmarked = QUESTIONS.filter(q=>ids.has(q.id));
+      if(!bookmarked.length){ list.innerHTML = '<div class="text-slate-500">No bookmarks yet. Add some during practice.</div>'; return; }
+      list.innerHTML = bookmarked.map(q=>`
+        <div class="p-4 rounded-2xl bg-white border border-slate-200">
+          <div class="text-xs text-slate-500 mb-1">${q.subject} • ${q.chapter} • ${q.topic}</div>
+          <div class="font-medium">${q.q}</div>
+          <div class="mt-2 text-sm">Answer: <span class="font-semibold">${String.fromCharCode(65+q.ans)}. ${q.options[q.ans]}</span></div>
+          <div class="mt-1 text-sm text-slate-600">${q.exp}</div>
+        </div>`).join('');
+    }
+
+    function renderAbout(){ document.getElementById('app').innerHTML = document.getElementById('aboutTpl').innerHTML; }
+    function renderContact(){
+      const app = document.getElementById('app');
+      app.innerHTML = document.getElementById('contactTpl').innerHTML;
+      document.getElementById('contactForm').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = document.getElementById('cName').value.trim();
+        const email = document.getElementById('cEmail').value.trim();
+        const msg = document.getElementById('cMsg').value.trim();
+        const body = encodeURIComponent(`Hi,
+
+${msg}
+
+— ${name}
+${email}`);
+        window.location.href = `mailto:naveedalicodes1@gmail.com?subject=${encodeURIComponent('NEET PREP Feedback')}&body=${body}`;
+      });
+    }
+    function renderPrivacy(){ document.getElementById('app').innerHTML = document.getElementById('privacyTpl').innerHTML; }
+    function renderTerms(){ document.getElementById('app').innerHTML = document.getElementById('termsTpl').innerHTML; }
+
+    // ------------------ Questions loader ------------------
+    async function loadQuestions(){
+      try {
+        const res = await fetch('./questions.json', {cache:'no-store'});
+        if(!res.ok) throw new Error('no file');
+        const data = await res.json();
+        if(!Array.isArray(data)) throw new Error('Invalid questions.json');
+        QUESTIONS = data;
+      } catch (e) {
+        QUESTIONS = SAMPLE_QUESTIONS; // fallback
+      }
+    }
+
+    // ------------------ Init ------------------
+    (async function init(){
+      await loadQuestions();
+      document.getElementById('year').textContent = new Date().getFullYear();
+      renderRoute();
+    })();
+  </script>
+</body>
+</html>
+
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin https://github.com/naddyA5951/index.html
+git push -u origin main
